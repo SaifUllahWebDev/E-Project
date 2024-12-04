@@ -1,5 +1,5 @@
 <?php
-require('/xampp/htdocs/Vaccine_management_system/db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 // Get patient ID from URL
 $patient_id = $_GET['id'] ?? null;

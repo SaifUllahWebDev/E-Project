@@ -1,5 +1,5 @@
 <?php
-require('db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);

@@ -1,5 +1,5 @@
 <?php
-require('/xampp/htdocs/Vaccine_management_system/db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 // Fetch total number of patients
 $total_patients_sql = "SELECT COUNT(*) as total_patients FROM patient";

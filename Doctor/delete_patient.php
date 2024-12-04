@@ -1,14 +1,14 @@
 <?php
-require('db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $sql = "DELETE FROM patient WHERE id=$id";
 
     if ($conn->query($sql)) {
-        echo "Patient record deleted successfully!";
+        echo 'success';  // Send success message to AJAX
     } else {
-        echo "Error: " . $conn->error;
+        echo 'Error: ' . $conn->error;  // Send error message to AJAX
     }
 }
 ?>

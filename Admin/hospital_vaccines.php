@@ -1,5 +1,5 @@
 <?php
-require('/xampp/htdocs/Vaccine_management_system/db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 // Get the hospital ID from the URL
 $hospital_id = $_GET['hospital_id'];
@@ -26,6 +26,7 @@ $vaccine_result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaccines Available</title>
+    <link rel="stylesheet" href="CSS/hospital_vaccine.css">
     <style>
         body {
             font-family: Arial, sans-serif;

@@ -1,5 +1,5 @@
 <?php
-require('db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 $sql = 'SELECT * FROM patient';
 $result = $conn->query($sql);
@@ -142,9 +142,22 @@ if ($result->num_rows > 0) {
             document.getElementById('edit-modal').style.display = 'none';
         }
 
-        function confirmDelete(url) {
+        function confirmDelete(patientId) {
             if (confirm('Are you sure you want to delete this patient?')) {
-                window.location.href = url;
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'delete_patient.php?id=' + patientId, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var response = xhr.responseText.trim();
+                        if (response === 'success') {
+                            var row = document.getElementById('row-' + patientId);
+                            row.remove();
+                        } else {
+                            alert('Error deleting patient');
+                        }
+                    }
+                };
+                xhr.send();
             }
         }
     </script>
@@ -162,7 +175,7 @@ if ($result->num_rows > 0) {
           </tr>";
 
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
+        echo "<tr id='row-" . htmlspecialchars($row['id']) . "'>";
         echo "<td>" . htmlspecialchars($row['id']) . "</td>";
         echo "<td>" . htmlspecialchars($row['patient_name']) . "</td>";
         echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";
@@ -178,7 +191,7 @@ if ($result->num_rows > 0) {
                     '" . htmlspecialchars($row['allergy']) . "',
                     '" . htmlspecialchars($row['age']) . "'
                 )\">Edit</button>
-                <button class='action-btn delete-btn' onclick=\"confirmDelete('delete_patient.php?id=" . htmlspecialchars($row['id']) . "')\">Delete</button>
+                <button class='action-btn delete-btn' onclick=\"confirmDelete(" . htmlspecialchars($row['id']) . ")\">Delete</button>
               </td>";
         echo "</tr>";
     }

@@ -1,5 +1,5 @@
 <?php
-require('/xampp/htdocs/Vaccine_management_system/db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 // Fetch all hospital details
 $sql = "SELECT * FROM hospital_user";
@@ -32,20 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Hospital Details</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        table th {
-            background-color: #f4f4f4;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/hospital_detail.css">
 </head>
 <body>
     <h1>Hospital Details</h1>

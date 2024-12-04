@@ -1,5 +1,5 @@
 <?php
-require('db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Fetch updated data from the POST request

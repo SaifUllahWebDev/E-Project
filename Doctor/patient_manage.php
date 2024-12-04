@@ -1,5 +1,5 @@
 <?php
-require('db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 // Add the `corona_result` column if it doesn't already exist (one-time operation).
 $conn->query("ALTER TABLE patient ADD COLUMN IF NOT EXISTS corona_result ENUM('Positive', 'Negative') DEFAULT 'Negative'");
@@ -51,78 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_patient'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Management</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 18px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .action-btn {
-            padding: 5px 10px;
-            margin: 2px;
-            cursor: pointer;
-        }
-        .edit-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        .close-btn, .save-btn {
-            margin-top: 10px;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-        .modal-content {
-            display: flex;
-            flex-direction: column;
-        }
-        .close-btn {
-            align-self: flex-end;
-            background: red;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .save-btn {
-            background: green;
-            color: white;
-            border: none;
-            padding: 10px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/patient_manage.css">
+    
 </head>
 <body>
 

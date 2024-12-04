@@ -1,5 +1,5 @@
 <?php
-require('db.php');
+require('/xampp/htdocs/E-Project/db.php');
 
 // Check if a button is clicked
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

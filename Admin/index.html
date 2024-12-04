@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <title>Admin Panel</title>
 </head>
 <body>
-    <button><a href="Admin_panel.php">Patient details</a></button>
-    <button><a href="">Covid Test Results</a></button>
-    <button><a href="hospitals.php">Vaccines in Hospital</a></button>
-    
-    <button><a href="admin_hospital_details.php">Hospital Details</a></button>
-    <button><a href="">Booking details</a></button>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="Admin_panel.php">Patient Details</a>
+        <a href="#">Covid Test Results</a>
+        <a href="hospitals.php">Vaccines in Hospital</a>
+        <a href="admin_hospital_details.php">Hospital Details</a>
+        <a href="admin_appointments.php">Booking Details</a>
+    </div>
+    <div class="main-content">
+        <h1>Welcome to the Admin Panel</h1>
+        <p>Select an option from the sidebar to manage the system.</p>
+    </div>
 </body>
 </html>
