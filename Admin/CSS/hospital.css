@@ -1,0 +1,105 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(to bottom right, #e0f7fa, #80deea);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+/* Heading Styles */
+h1 {
+    font-size: 2rem;
+    color: #004d40;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background: #00695c;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+table tr:nth-child(even) {
+    background: #f1f8e9;
+}
+
+table tr:hover {
+    background: #e8f5e9;
+    cursor: pointer;
+}
+
+table td {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Link Styles */
+a {
+    text-decoration: none;
+    color: #00796b;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #004d40;
+}
+
+/* No Data Message */
+p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #d32f2f;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    table th, table td {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}
