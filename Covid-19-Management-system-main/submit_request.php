@@ -122,9 +122,3 @@ body {
 
     </style>
 </head>
-<body>
-<?php 
-    include('responsive-sidebar-dark-light-main\index.html');
-    ?>
-</body>
-</html>

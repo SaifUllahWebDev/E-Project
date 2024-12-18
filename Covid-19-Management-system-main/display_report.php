@@ -1,15 +1,8 @@
 <?php
 include('db.php');
-// Default query to show all reports
-$query = "SELECT * FROM reports";
 
-// Check if search is performed
-if (isset($_GET['search'])) {
-    $search_name = $_GET['search'];
-    $query = "SELECT * FROM reports WHERE patient_name LIKE '%$search_name%'";
-}
-
-// Fetch data from the database
+// Fetch data from the "patient" table
+$query = "SELECT id, patient_name, phone_number, dob, allergy, age, medicine_prescribed, vaccination_status, corona_result FROM patient";
 $result = $conn->query($query);
 ?>
 
@@ -18,190 +11,171 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COVID-19 Test Reports</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  
-    <link rel="stylesheet" href="responsive-sidebar-dark-light-main\assets\css\styles.css">
-    <style>/* General Styles */
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #f5f7fa;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    min-height: 100vh;
-    
-}
+    <title>Patient Records</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            background: #f4f4f9;
+        }
 
-.container {
-    max-width: 800px;
-    width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-left: 160px;
+        /* Vertical Navbar */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #007bff;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            padding-top: 20px;
+        }
 
-}
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
 
-/* Header */
-h1 {
-    text-align: center;
-    color: #007bff;
-    margin-bottom: 20px;
-    font-size: 28px;
-}
+        .sidebar a {
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
 
-/* Search Form */
-.search-form {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    margin-left: 60px;
-}
+        .sidebar a:hover {
+            background: #0056b3;
+        }
 
-.search-form input {
-    width: 70%;
-    padding: 10px;
-    border-radius: 8px 0 0 8px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-}
+        .container {
+            margin-left: 240px; /* Space for the sidebar */
+            padding: 20px;
+            flex-grow: 1;
+            background: #fff;
+            border-radius: 8px;
+            max-width: 90%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-.search-form button {
-    padding: 10px 20px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    font-weight: bold;
-  
-    transition: 0.3s;
-}
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
 
-.search-form button:hover {
-    background: #0056b3;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-/* Table Styles */
-#report_table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
 
-#report_table th, #report_table td {
-    padding: 12px 15px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
+        th {
+            background: #007bff;
+            color: white;
+        }
 
-#report_table th {
-    background: #007bff;
-    color: #fff;
-}
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
 
-#report_table tr:hover {
-    background: #f0f4ff;
-}
+        .btn-export {
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-/* Export Button */
-.export-btn {
-    padding: 8px 16px;
-    background: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.export-btn:hover {
-    background: #218838;
-}
-
-/* No Results Message */
-.no-results {
-    text-align: center;
-    padding: 20px;
-    background: #ffc107;
-    border-radius: 8px;
-    color: #856404;
-    font-size: 18px;
-}
-</style>
+        .btn-export:hover {
+            background: #218838;
+        }
+    </style>
 </head>
 <body>
-<?php 
-    include('responsive-sidebar-dark-light-main\index.html');
-    ?>
-<div class="container">
-    <h1>COVID-19 Test Reports</h1>
-    
-    <!-- Search Form -->
-    <form method="get" action="display_report.php" class="search-form">
-        <input type="text" name="search" placeholder="🔍 Enter Patient Name" required>
-        <button type="submit">Search</button>
-    </form>
-    
-    <div id="report-list">
-        <?php if ($result->num_rows > 0): ?>
-            <table id="report_table">
-                <thead>
-                    <tr>
-                        <th>Patient Name</th>
-                        <th>Test Result</th>
-                        <th>Vaccination Suggestion</th>
-                        <th>Report Date</th>
-                        <th>Export</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= $row['patient_name']; ?></td>
-                            <td><?= $row['test_result']; ?></td>
-                            <td><?= $row['vaccination_suggestion']; ?></td>
-                            <td><?= $row['report_date']; ?></td>
-                            <td><button class="export-btn" onclick='exportRowToPDF(<?= json_encode($row); ?>)'>Export to PDF</button></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p class="no-results">No reports found.</p>
-        <?php endif; ?>
-    </div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+<a href="index.html">Search Vaccination </a>
+        <a href="book_appointment.php">Request for COVID-19 Test</a>
+        <a href="display_report.php">Vaccination Report</a>
+        <a href="book_appointment.php">Book Hospital Appointment</a>
+        <a href="checkappointments.php">My Appointment</a>
 </div>
-<script src="responsive-sidebar-dark-light-main\assets\js\main.js"></script>
-<?php $conn->close(); ?>
+
+<!-- Main Content -->
+<div class="container">
+    <h1>Patient Records</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patient Name</th>
+                <th>Phone Number</th>
+                <th>Date of Birth</th>
+                <th>Allergy</th>
+                <th>Age</th>
+                <th>Medicine Prescribed</th>
+                <th>Vaccination Status</th>
+                <th>Corona Result</th>
+                <th>Export</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['id']) ?></td>
+                        <td><?= htmlspecialchars($row['patient_name']) ?></td>
+                        <td><?= htmlspecialchars($row['phone_number']) ?></td>
+                        <td><?= htmlspecialchars($row['dob']) ?></td>
+                        <td><?= htmlspecialchars($row['allergy']) ?></td>
+                        <td><?= htmlspecialchars($row['age']) ?></td>
+                        <td><?= htmlspecialchars($row['medicine_prescribed']) ?></td>
+                        <td><?= htmlspecialchars($row['vaccination_status']) ?></td>
+                        <td><?= htmlspecialchars($row['corona_result']) ?></td>
+                        <td>
+                            <button class="btn-export" onclick="exportToPDF(<?= htmlspecialchars(json_encode($row)) ?>)">Export</button>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="10">No records found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 
 <script>
-    // Function to Export Data as PDF
-    function exportRowToPDF(rowData) {
+    function exportToPDF(rowData) {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        // Add Patient Details to PDF
+        // Add content to PDF
         doc.text(`Patient Name: ${rowData.patient_name}`, 10, 10);
-        doc.text(`Test Result: ${rowData.test_result}`, 10, 20);
-        doc.text(`Vaccination Suggestion: ${rowData.vaccination_suggestion}`, 10, 30);
-        doc.text(`Report Date: ${rowData.report_date}`, 10, 40);
+        doc.text(`Phone Number: ${rowData.phone_number}`, 10, 20);
+        doc.text(`Date of Birth: ${rowData.dob}`, 10, 30);
+        doc.text(`Allergy: ${rowData.allergy}`, 10, 40);
+        doc.text(`Age: ${rowData.age}`, 10, 50);
+        doc.text(`Medicine Prescribed: ${rowData.medicine_prescribed}`, 10, 60);
+        doc.text(`Vaccination Status: ${rowData.vaccination_status}`, 10, 70);
+        doc.text(`Corona Result: ${rowData.corona_result}`, 10, 80);
 
-        // Save the PDF with the Patient's Name
+        // Save the PDF
         doc.save(`${rowData.patient_name}_report.pdf`);
     }
 </script>
-
-
-
-
- 
-
 </body>
 </html>

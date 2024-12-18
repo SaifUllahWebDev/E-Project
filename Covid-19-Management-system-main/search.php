@@ -6,7 +6,7 @@ include ("db.php");
 $city = $_POST['city'];
 
 // Query to search hospitals by city
-$sql = "SELECT * FROM hospitals WHERE city LIKE ?";
+$sql = "SELECT * FROM hospitals WHERE location LIKE ?";
 $stmt = $conn->prepare($sql);
 $search_city = "%$city%";
 $stmt->bind_param("s", $search_city);
@@ -17,10 +17,9 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<div class='result-item'>";
-        echo "<h3>" . $row['name'] . "</h3>";
-        echo "<p><strong>Address:</strong> " . $row['address'] . "</p>";
-        echo "<p><strong>Phone:</strong> " . $row['phone'] . "</p>";
-        echo "<p><strong>Type:</strong> " . $row['type'] . "</p>";
+        echo "<h3>" . $row['hospital_name'] . "</h3>";
+        echo "<p><strong>Address:</strong> " . $row['location'] . "</p>";
+        
         echo "</div>";
     }
 } else {
