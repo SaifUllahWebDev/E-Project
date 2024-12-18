@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             if ($user['role'] === 'hospital') {
                 header("Location: /E-project/Doctor/index.html");
             } elseif ($user['role'] === 'patient') {
-                header("Location: /E-Project/Covid-19-Management-system-main/index.html");
+                header("Location: /E-Project/Covid-19-Management-system-main/book_appointment.php");
             } else {
                 header("Location: index.php"); // Default fallback
             }
