@@ -1,17 +1,6 @@
 <?php
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "covid_hospital_search";
+require ("db.php");
 
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Get the 'id' and 'status' from the URL
 $id = $_GET['id'];
@@ -39,6 +28,8 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointment Status Update</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive-sidebar-dark-light-main\assets\css\styles.css">
+    
     <style>/* Reset default styles */
 * {
     margin: 0;
@@ -128,6 +119,9 @@ body {
 </style>
 </head>
 <body>
+<?php 
+    include('responsive-sidebar-dark-light-main\index.html');
+    ?>
     <div class="container">
         <header class="header">
             <h1>Appointment Status Update</h1>

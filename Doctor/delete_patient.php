@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
     if ($conn->query($sql)) {
         echo 'success';  // Send success message to AJAX
     } else {
-        echo 'Error: ' . $conn->error;  // Send error message to AJAX
+        echo 'Error: ' . $conn->error;  
     }
 }
 ?>

@@ -1,17 +1,7 @@
 <?php
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "covid_hospital_search";
 
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+include ("db.php");
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,7 +43,11 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title><style>
+    <title>Document</title>
+    <link rel="stylesheet" href="responsive-sidebar-dark-light-main\assets\css\styles.css">
+    
+    <style>
+
         /* General Styling */
 body {
     font-family: 'Poppins', Arial, sans-serif;
@@ -129,6 +123,8 @@ body {
     </style>
 </head>
 <body>
-    
+<?php 
+    include('responsive-sidebar-dark-light-main\index.html');
+    ?>
 </body>
 </html>

@@ -6,12 +6,7 @@
     <title>Admin Panel - Manage Requests</title>
     <link rel="stylesheet" href="styles.css">
     <style>/* General Reset */
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 /* Body and Layout */
 body {
@@ -157,19 +152,8 @@ td a.reject-btn:hover {
                 </thead>
                 <tbody>
                     <?php
-                    // Database configuration
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "covid_hospital_search";
+                   include ("db.php");
 
-                    // Create a connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
 
                     // Fetch all pending requests
                     $sql = "SELECT * FROM requests WHERE status = 'Pending'";
